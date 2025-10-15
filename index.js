@@ -20,6 +20,8 @@ main().then(()=>{
 app.set("view engine", "ejs");
 app.set("views",path.join(__dirname,"views"))
 app.use(express.static(path.join(__dirname,"public")));
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 
 app.listen(3000,()=>{
     console.log("Server listening");
@@ -34,9 +36,20 @@ app.get("/listings", async(req,res)=>{
     res.render("index.ejs",{listings})
 })
 
+app.get("/listings/new",(req,res)=>{
+    res.render("new.ejs");
+})
+
 app.get("/listings/:id",async (req,res)=>{
     const id = req.params.id;
     const listing = await Listing.findById(id);
     res.render("show.ejs",{listing})
     
+})
+
+
+app.post("/listings", async(req,res)=>{
+    const listing = req.body;
+    await Listing.insertOne(listing);
+    res.redirect("/listings")
 })

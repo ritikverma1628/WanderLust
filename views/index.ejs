@@ -10,8 +10,11 @@
     <div>
 
     <h1>All Listings</h1>
+    <button><a href="/listings/new">New Listing</a></button>
     <% for (let listing of listings) {%>
         <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+        &nbsp;&nbsp;
+        
         <br>
     <% } %>
     
