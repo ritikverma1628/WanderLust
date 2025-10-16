@@ -13,6 +13,7 @@
     <button><a href="/listings/new">New Listing</a></button>
     <% for (let listing of listings) {%>
         <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+        <button><a href="/listings/<%=listing._id%>/edit">Edit</a></button>
         &nbsp;&nbsp;
         
         <br>

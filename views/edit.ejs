@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/listings/<%=listing._id%>?_method=patch" method="post">
+        <input type="text" placeholder="Enter the title" name="title" value="<%= listing.title %>"><br>
+        <input type="text" placeholder="description" name="description" value="<%= listing.description %>"><br>
+        <input type="number" placeholder="price" name="price" value="<%= listing.price %>"><br>
+        <input type="text" placeholder="location" name="location" value="<%= listing.location %>"><br>
+        <input type="text" placeholder=" Country" name="country" value="<%= listing.country %>"><br>
+        <button>Submit</button>
+    </form>
+</body>
+</html>
