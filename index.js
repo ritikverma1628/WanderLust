@@ -42,6 +42,11 @@ app.get("/listings/new",(req,res)=>{
     res.render("new.ejs");
 })
 
+app.delete("/listings/:id",async(req,res)=>{
+    await Listing.findByIdAndDelete(req.params.id);
+    res.redirect("/listings");
+})
+
 app.patch("/listings/:id",async (req,res)=>{
     const newListing = req.body;
     await Listing.findByIdAndUpdate(req.params.id,newListing);
