@@ -6,3 +6,21 @@ a{
 a:hover{
     text-decoration:solid;
 }
+
+.navbar-brand i{
+    color: rgb(255, 59, 59);
+}
+
+.card-img-top{
+    height:200px;
+    object-fit: cover;
+}
+
+.heading{
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.buttons{
+    margin-top: 20px;
+}

@@ -1,27 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <div>
-
-    <h1>All Listings</h1>
-    <button><a href="/listings/new">New Listing</a></button>
-    <% for (let listing of listings) {%>
-        <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
-        &nbsp;&nbsp;
-        <button><a href="/listings/<%=listing._id%>/edit">Edit</a></button>
-        <form action="/listings/<%=listing._id%>?_method=delete" method="post">
-            <button>Delete</button>
-        </form>
-        
-        <br>
-    <% } %>
-    
+<% layout("/layout.ejs") %>
+<% block('styles').append('<link rel="stylesheet" href="index.css">') %>
+<div>
+    <div class="container text-center">
+        <h1 class="heading">All Listings</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5">
+            <% for (let listing of listings) {%>
+                <div class="col">
+                    <a href="/listings/<%= listing._id %>">
+                        <div class="card h-100" style="width: 18rem;">
+                        <img src="<%= listing.image %>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= listing.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= listing.description %>
+                            </p>
+                            <div class="buttons">
+                                <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary">Edit</a>
+                                <form class="d-inline" action="/listings/<%=listing._id%>?_method=delete"
+                                    method="post">
+                                    <button class="btn btn-primary">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+            <% } %>
+        </div>
     </div>
-</body>
-</html>
+</div> 
