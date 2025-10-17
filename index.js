@@ -3,8 +3,10 @@ const mongoose = require("mongoose")
 const Listing = require("./models/listings/listings")
 const path = require("path")
 const methodOverride = require("method-override")
+const { title } = require("process")
 
 const app = express();
+const ejsMate = require("ejs-mate")
 
 
 async function main(){
@@ -17,7 +19,7 @@ main().then(()=>{
     console.log("Error connecting database")
 });
 
-
+app.engine("ejs",ejsMate);
 app.set("view engine", "ejs");
 app.set("views",path.join(__dirname,"views"))
 app.use(express.static(path.join(__dirname,"public")));
@@ -35,7 +37,7 @@ app.get("/",(req,res)=>{
 
 app.get("/listings", async(req,res)=>{
     const listings = await Listing.find({});
-    res.render("index.ejs",{listings})
+    res.render("index",{ title:"All Listings", listings })
 })
 
 app.get("/listings/new",(req,res)=>{
@@ -59,7 +61,6 @@ app.get("/listings/:id",async (req,res)=>{
     res.render("show.ejs",{listing})
     
 })
-
 
 app.post("/listings", async(req,res)=>{
     const listing = req.body;
