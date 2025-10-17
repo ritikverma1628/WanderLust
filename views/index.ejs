@@ -3,9 +3,9 @@
 <div>
     <div class="container text-center">
         <h1 class="heading">All Listings</h1>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 text-center">
             <% for (let listing of listings) {%>
-                <div class="col">
+                <div class="col" style="display:flex; justify-content: center;">
                     <a href="/listings/<%= listing._id %>">
                         <div class="card h-100" style="width: 18rem;">
                         <img src="<%= listing.image %>" class="card-img-top" alt="...">
