@@ -3,6 +3,8 @@ const mongoose = require("mongoose")
 const Listing = require("./models/listings/listings")
 const path = require("path")
 const methodOverride = require("method-override")
+const ejsMate = require('ejs-mate');
+const {title}= require("process")
 
 const app = express();
 
@@ -17,6 +19,7 @@ main().then(()=>{
     console.log("Error connecting database")
 });
 
+app.engine("ejs",ejsMate)
 app.set("view engine", "ejs");
 app.set("views",path.join(__dirname,"views"))
 app.use(express.static(path.join(__dirname,"public")));
