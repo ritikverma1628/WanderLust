@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 a{
     text-decoration: none;
     color: black;
@@ -20,7 +26,7 @@ a:hover{
 
 .heading{
     margin-bottom: 40px;
-    margin-top: 40px;
+    padding-top: 80px;
 }
 
 .buttons{
@@ -29,17 +35,24 @@ a:hover{
 }
 
 nav{
-    border-bottom: 1px solid rgb(145, 145, 145) !important;
+    border-bottom: 1px solid rgb(205, 204, 204) ;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #efeded ;
+    z-index: 2;
 }
 
 .footer{
     border-top: 1px solid rgb(165, 165, 165);
     margin-top: 100px;
+    background-color: #efeded;
+    padding: 15px;
 }
 
 .tnc{
-    margin-bottom: 10px;
-    margin-top: 5px;
+    margin-top: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,7 +61,6 @@ nav{
 }
 
 .socials{
-    margin-top: 10px;
     margin-bottom: 5px;
     display: flex;
     justify-content: center;
