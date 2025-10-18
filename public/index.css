@@ -1,7 +1,6 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 a{
@@ -42,6 +41,7 @@ nav{
     width: 100%;
     background-color: #efeded ;
     z-index: 2;
+    height: 70px;
 }
 
 .footer{
@@ -49,6 +49,7 @@ nav{
     margin-top: 100px;
     background-color: #efeded;
     padding: 15px;
+    
 }
 
 .tnc{
@@ -83,4 +84,19 @@ nav{
 
 .socials i:hover{
     color: rgb(0, 0, 0);
+}
+
+.form{
+    padding-top: 80px;
+    width: 60%;
+    color: rgb(66, 66, 66);
+}
+
+.form .btn{
+    background-color: rgb(255, 59, 59);
+
+}
+
+.form .form-control{
+    border: 1px solid rgb(43, 38, 48);
 }
