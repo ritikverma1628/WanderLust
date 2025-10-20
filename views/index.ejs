@@ -9,20 +9,14 @@
                     <a href="/listings/<%= listing._id %>">
                         <div class="card h-100" style="width: 18rem; border: 0px;">
                         <img src="<%= listing.image %>" class="card-img-top" alt="...">
-                        <div class="card-body">
+                        <div class="card-body"style="text-align:start">
                             <h5 class="card-title">
                                 <%= listing.title %>
                             </h5>
                             <p class="card-text">
-                                <%= listing.description %>
+                               &#8377; <%= listing.price.toLocaleString('en-IN') %>
                             </p>
-                            <div class="buttons">
-                                <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary">Edit</a>
-                                <form class="d-inline" action="/listings/<%=listing._id%>?_method=delete"
-                                    method="post">
-                                    <button class="btn btn-primary">Delete</button>
-                                </form>
-                            </div>
+                            
                         </div>
                         </div>
                     </a>

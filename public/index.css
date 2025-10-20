@@ -24,8 +24,9 @@ a:hover{
 }
 
 .heading{
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     padding-top: 80px;
+    text-align: center;
 }
 
 .buttons{
@@ -42,10 +43,19 @@ nav{
     z-index: 2;
     height: 70px;
 }
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main{
+    flex:1;
+    
+}
 
 .footer{
     border-top: 1px solid rgb(165, 165, 165);
-    margin-top: 100px;
+    margin-top: 80px;
     background-color: #efeded;
     padding: 15px;
     
@@ -86,7 +96,6 @@ nav{
 }
 
 .form{
-    padding-top: 80px;
     width: 35%;
     color: rgb(66, 66, 66);
 }
@@ -99,4 +108,17 @@ nav{
 
 .form .form-control{
     border: 1px solid rgb(43, 38, 48);
+}
+
+.details{
+    width: 36%;
+}
+
+.col p{
+    margin-bottom: 0px;
+}
+
+.col img{
+    border-radius: 20px;
+    margin-bottom: 7px;
 }
