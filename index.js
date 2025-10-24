@@ -5,6 +5,7 @@ const path = require("path")
 const methodOverride = require("method-override")
 const ejsMate = require('ejs-mate');
 const {title}= require("process")
+const asyncWrap = require("./utils/asyncWrap")
 
 const app = express();
 
@@ -35,41 +36,47 @@ app.get("/",(req,res)=>{
     res.send("Hello, this is home page");
 })
 
-app.get("/listings", async(req,res)=>{
+app.get("/listings", asyncWrap(async(req,res)=>{
     const listings = await Listing.find({});
     res.render("index.ejs",{listings})
-})
+}))
 
 app.get("/listings/new",(req,res)=>{
     res.render("new.ejs");
 })
 
-app.delete("/listings/:id",async(req,res)=>{
+app.delete("/listings/:id",asyncWrap(async(req,res)=>{
     await Listing.findByIdAndDelete(req.params.id);
     res.redirect("/listings");
-})
+}))
 
-app.patch("/listings/:id",async (req,res)=>{
+app.patch("/listings/:id",asyncWrap(async (req,res)=>{
     const newListing = req.body;
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     res.redirect("/listings");
-})
+}))
 
-app.get("/listings/:id",async (req,res)=>{
+app.get("/listings/:id", asyncWrap(async (req,res)=>{
     const id = req.params.id;
     const listing = await Listing.findById(id);
     res.render("show.ejs",{listing})
     
-})
+}))
 
-app.post("/listings", async(req,res)=>{
-    const listing = req.body;
-    await Listing.create(listing);
-    res.redirect("/listings")
-})
+app.post("/listings", asyncWrap(async(req,res, next)=>{
+        const listing = req.body;
+        await Listing.create(listing);
+        res.redirect("/listings")
+    
+}))
 
-app.get("/listings/:id/edit",async(req,res)=>{
+app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
     const listing = await Listing.findById(req.params.id);
     console.log(listing);
     res.render("edit.ejs",{listing});
-});
+}));
+
+app.use((err,req,res,next)=>{
+    console.log(err.message);
+    next();
+})
