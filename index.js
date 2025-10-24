@@ -7,6 +7,7 @@ const ejsMate = require('ejs-mate');
 const {title}= require("process")
 const asyncWrap = require("./utils/asyncWrap")
 const ExpressError = require("./utils/expressError")
+const listingSchema = require('./joiValidations')
 
 const app = express();
 
@@ -28,6 +29,14 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'));
+
+const isValid = (req,res,next)=>{
+    const {error} = listingSchema.validate(req.body);
+    if(error){
+        throw new ExpressError(404,error)
+    }
+    else{next()};
+}
 
 app.listen(3000,()=>{
     console.log("Server listening");
@@ -53,27 +62,22 @@ app.delete("/listings/:id",asyncWrap(async(req,res)=>{
 
 app.patch("/listings/:id",asyncWrap(async (req,res)=>{
     const newListing = req.body;
-    if(!newListing){
-        throw new ExpressError(500, "Please enter valid values")
-    }
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     res.redirect("/listings");
 }))
 
-app.get("/listings/:id", asyncWrap(async (req,res)=>{
+app.get("/listings/:id", isValid,asyncWrap(async (req,res)=>{
     const id = req.params.id;
     const listing = await Listing.findById(id);
     res.render("show.ejs",{listing})
     
 }))
 
-app.post("/listings", asyncWrap(async(req,res, next)=>{
-        const listing = req.body;
-        if(!listing){
-            throw new ExpressError(500, "Please enter valid values")
-        }
-        await Listing.create(listing);
-        res.redirect("/listings")
+app.post("/listings",isValid, asyncWrap(async(req,res, next)=>{
+    const listing = req.body;
+    await Listing.create(listing);
+    res.redirect("/listings")
+
     
 }))
 
