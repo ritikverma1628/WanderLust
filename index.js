@@ -54,7 +54,7 @@ app.delete("/listings/:id",asyncWrap(async(req,res)=>{
 app.patch("/listings/:id",asyncWrap(async (req,res)=>{
     const newListing = req.body;
     if(!newListing){
-        throw new ExpressError(404, "Please enter valid values")
+        throw new ExpressError(500, "Please enter valid values")
     }
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     res.redirect("/listings");
@@ -70,7 +70,7 @@ app.get("/listings/:id", asyncWrap(async (req,res)=>{
 app.post("/listings", asyncWrap(async(req,res, next)=>{
         const listing = req.body;
         if(!listing){
-            throw new ExpressError(404, "Please enter valid values")
+            throw new ExpressError(500, "Please enter valid values")
         }
         await Listing.create(listing);
         res.redirect("/listings")
@@ -83,8 +83,15 @@ app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
     res.render("edit.ejs",{listing});
 }));
 
+app.use("/",(req,res,next)=>{
+    next(new ExpressError(404, 'Page not found!'))
+})
+
 app.use((err,req,res,next)=>{
     // console.log(err.message);
     // next();
-    res.status(err.statusCode).send(err.message);
+
+    // res.status(err.statusCode).send(err.message);
+    res.render('error.ejs', {err})
+
 })
