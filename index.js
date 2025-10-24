@@ -6,6 +6,7 @@ const methodOverride = require("method-override")
 const ejsMate = require('ejs-mate');
 const {title}= require("process")
 const asyncWrap = require("./utils/asyncWrap")
+const ExpressError = require("./utils/expressError")
 
 const app = express();
 
@@ -52,6 +53,9 @@ app.delete("/listings/:id",asyncWrap(async(req,res)=>{
 
 app.patch("/listings/:id",asyncWrap(async (req,res)=>{
     const newListing = req.body;
+    if(!newListing){
+        throw new ExpressError(404, "Please enter valid values")
+    }
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     res.redirect("/listings");
 }))
@@ -65,6 +69,9 @@ app.get("/listings/:id", asyncWrap(async (req,res)=>{
 
 app.post("/listings", asyncWrap(async(req,res, next)=>{
         const listing = req.body;
+        if(!listing){
+            throw new ExpressError(404, "Please enter valid values")
+        }
         await Listing.create(listing);
         res.redirect("/listings")
     
@@ -77,6 +84,7 @@ app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
 }));
 
 app.use((err,req,res,next)=>{
-    console.log(err.message);
-    next();
+    // console.log(err.message);
+    // next();
+    res.status(err.statusCode).send(err.message);
 })
