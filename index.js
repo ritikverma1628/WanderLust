@@ -60,13 +60,13 @@ app.delete("/listings/:id",asyncWrap(async(req,res)=>{
     res.redirect("/listings");
 }))
 
-app.patch("/listings/:id",asyncWrap(async (req,res)=>{
+app.patch("/listings/:id", isValid , asyncWrap(async (req,res)=>{
     const newListing = req.body;
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     res.redirect("/listings");
 }))
 
-app.get("/listings/:id", isValid,asyncWrap(async (req,res)=>{
+app.get("/listings/:id",asyncWrap(async (req,res)=>{
     const id = req.params.id;
     const listing = await Listing.findById(id);
     res.render("show.ejs",{listing})
