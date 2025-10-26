@@ -1,11 +1,10 @@
 <% layout('layout') %>
 <% block('styles').append('<link rel="stylesheet" href="/css/index.css">') %>
 
-<h2 class=" heading" >Listing Details</h2>
 <div class="container details">
+    <h2 class=" heading" ><%= listing.title %></h2>
     <div class="col">
         <img src="<%= listing.image %>" alt="" style="height: 300px; width: 100%;">
-        <h4><%= listing.title %></h4>
     </div>
     <div class="col">
         <h6 style="font-weight: 400;"><%= listing.description %></h6>
@@ -17,6 +16,20 @@
         <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary">Edit</a>
         <form class="d-inline" action="/listings/<%=listing._id%>?_method=delete" method="post">
             <button class="btn btn-primary">Delete</button>
+        </form>
+    </div>
+<hr>
+    <div class="review">
+        <h3>Leave a Review</h3>
+        <form action="" >
+            <label for="rating" class="form-label">Give us rating: <output id="value"></output></label>
+            <input type="range" class="form-range" id="rating" name="rating" min="1" max="5">
+
+            <label for="comment" class="form-label">What's your pov:</label>
+            <textarea name="comment" id="comment" rows="5" cols="20" class="form-control"></textarea>
+
+            <button class="btn btn-outline-dark mt-3" type="submit">Submit Review</button>
+
         </form>
     </div>
     
