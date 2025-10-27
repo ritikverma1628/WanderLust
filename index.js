@@ -8,7 +8,7 @@ const ejsMate = require('ejs-mate');
 const {title}= require("process")
 const asyncWrap = require("./utils/asyncWrap")
 const ExpressError = require("./utils/expressError")
-const listingSchema = require('./joiValidations')
+const {listingValidations,reviewValidations} = require('./joiValidations')
 
 const app = express();
 
@@ -31,12 +31,25 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'));
 
-const isValid = (req,res,next)=>{
-    const {error} = listingSchema.validate(req.body);
+
+//server-side validations for listing forms
+const validateListing = (req,res,next)=>{
+    const {error} = listingValidations.validate(req.body);
     if(error){
         throw new ExpressError(404,error)
     }
     else{next()};
+}
+
+//server-side validations for review form
+const validateReview = (req,res,next)=>{
+    const {error} = reviewValidations.validate(req.body)
+    if(error){
+        throw new ExpressError(404, error)
+    }
+    else{
+        next();
+    }
 }
 
 app.listen(3000,()=>{
@@ -61,7 +74,7 @@ app.delete("/listings/:id",asyncWrap(async(req,res)=>{
     res.redirect("/listings");
 }))
 
-app.patch("/listings/:id", isValid , asyncWrap(async (req,res)=>{
+app.patch("/listings/:id", validateListing , asyncWrap(async (req,res)=>{
     const newListing = req.body;
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     res.redirect("/listings");
@@ -69,12 +82,12 @@ app.patch("/listings/:id", isValid , asyncWrap(async (req,res)=>{
 
 app.get("/listings/:id",asyncWrap(async (req,res)=>{
     const id = req.params.id;
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate('reviews');
     res.render("show.ejs",{listing})
     
 }))
 
-app.post("/listings",isValid, asyncWrap(async(req,res, next)=>{
+app.post("/listings",validateListing, asyncWrap(async(req,res, next)=>{
     const listing = req.body;
     await Listing.create(listing);
     res.redirect("/listings")
@@ -83,13 +96,13 @@ app.post("/listings",isValid, asyncWrap(async(req,res, next)=>{
 }))
 
 //post route for review
-app.post('/listings/:id/reviews', async(req,res)=>{
+app.post('/listings/:id/reviews', validateReview, asyncWrap(async(req,res)=>{
     let review = await Review.create(req.body.review)
     const listing = await Listing.findById(req.params.id);
     listing.reviews.push(review);
     await listing.save();
     res.redirect(`/listings/${req.params.id}`)
-})
+}))
 
 app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
     const listing = await Listing.findById(req.params.id);
@@ -101,6 +114,7 @@ app.use("/",(req,res,next)=>{
     next(new ExpressError(404, 'Page not found!'))
 })
 
+//eroor handling middleware
 app.use((err,req,res,next)=>{
     // console.log(err.message);
     // next();
