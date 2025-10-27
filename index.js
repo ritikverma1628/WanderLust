@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const Listing = require("./models/listings/listings")
+const Review = require('./models/reviews');
 const path = require("path")
 const methodOverride = require("method-override")
 const ejsMate = require('ejs-mate');
@@ -80,6 +81,15 @@ app.post("/listings",isValid, asyncWrap(async(req,res, next)=>{
 
     
 }))
+
+//post route for review
+app.post('/listings/:id/reviews', async(req,res)=>{
+    let review = await Review.create(req.body.review)
+    const listing = await Listing.findById(req.params.id);
+    listing.reviews.push(review);
+    await listing.save();
+    res.redirect(`/listings/${req.params.id}`)
+})
 
 app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
     const listing = await Listing.findById(req.params.id);
