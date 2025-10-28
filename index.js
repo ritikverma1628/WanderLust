@@ -104,6 +104,17 @@ app.post('/listings/:id/reviews', validateReview, asyncWrap(async(req,res)=>{
     res.redirect(`/listings/${req.params.id}`)
 }))
 
+//deleting the review
+app.delete("/listings/:id/reviews/:reviewId", asyncWrap(async(req,res)=>{
+    const listingId = req.params.id;
+    const reviewId = req.params.reviewId;
+
+    await Review.deleteOne({_id:reviewId});
+    await Listing.findOneAndUpdate({_id:listingId}, {$pull:{reviews:reviewId}});
+
+    res.redirect(`/listings/${listingId}`);
+}))
+
 app.get("/listings/:id/edit",asyncWrap(async(req,res)=>{
     const listing = await Listing.findById(req.params.id);
     console.log(listing);

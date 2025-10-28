@@ -58,9 +58,14 @@
     
                         <div class="card-text "><b>Comment : </b><%=review.comment%></div>
                         <% for(let i = 0 ; i<review.rating ; i++){ %>
-                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                            <i class="fa-solid fa-star" style="color: #ffd027;"></i>
                         <% } %>
     
+                    </div>
+                    <div class="card-footer">
+                        <form action="/listings/<%=listing._id%>/reviews/<%= review._id %>?_method=delete" method="post">
+                            <button class="btn btn-outline-dark">Delete</button>
+                        </form>
                     </div>
                 </div>
 
