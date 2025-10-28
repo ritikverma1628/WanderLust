@@ -1,25 +1,33 @@
 <% layout('layout') %>
 <% block('styles').append('<link rel="stylesheet" href="/css/index.css">') %>
 
-<div class="container details">
-    <h2 class=" heading" ><%= listing.title %></h2>
-    <div class="col">
-        <img src="<%= listing.image %>" alt="" style="height: 300px; width: 100%;">
+<div class="container ">
+
+    <div class="details">
+
+        <h2 class=" heading" ><%= listing.title %></h2>
+        <div class="col">
+            <img src="<%= listing.image %>" alt="" style="height: 300px; width: 100%;">
+        </div>
+        <div class="col">
+            <h6 style="font-weight: 400;"><%= listing.description %></h6>
+            <p><b>Price/night: </b>&#8377; <%= listing.price.toLocaleString('en-IN') %></p>
+            <p><b>Location: </b><%= listing.location %></p>
+            <p><b>Country: </b><%= listing.country %></p>
+        </div>
+        <div class="buttons">
+            <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary">Edit</a>
+            <form class="d-inline" action="/listings/<%=listing._id%>?_method=delete" method="post">
+                <button class="btn btn-primary">Delete</button>
+            </form>
+        </div>
+
     </div>
-    <div class="col">
-        <h6 style="font-weight: 400;"><%= listing.description %></h6>
-        <p><b>Price/night: </b>&#8377; <%= listing.price.toLocaleString('en-IN') %></p>
-        <p><b>Location: </b><%= listing.location %></p>
-        <p><b>Country: </b><%= listing.country %></p>
-    </div>
-    <div class="buttons">
-        <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary">Edit</a>
-        <form class="d-inline" action="/listings/<%=listing._id%>?_method=delete" method="post">
-            <button class="btn btn-primary">Delete</button>
-        </form>
-    </div>
-<hr>
-    <div class="review">
+
+<hr style="width: 40%; margin-right: auto; margin-left: auto;">
+
+    <div class="takeReview">
+
         <h3>Leave a Review</h3>
         <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
 
@@ -27,12 +35,38 @@
             <input type="range" class="form-range" id="rating" name="review[rating]" min="1" max="5" value="3">
 
             <label for="comment" class="form-label">Comment:</label>
-            <textarea name="comment" id="review[comment]" rows="5" cols="20" class="form-control" required></textarea>
+            <textarea name="review[comment]" id="comment" rows="5" cols="20" class="form-control" required></textarea>
             <div class="invalid-feedback">Please type in some words as a comment...</div>
 
             <button class="btn btn-outline-dark mt-3" type="submit">Submit Review</button>
 
         </form>
+
+    </div>
+
+<hr style="width: 100%; margin-right: auto; margin-left: auto;">
+
+<h3 class="mb-5">All reviews</h3>
+    <div class="allReviews row row-cols-2 g-5">
+
+
+        <% for (let review of listing.reviews) {%>
+            <div class="col ">
+                
+                <div class="card h-100">
+                    <div class="card-body ">
+    
+                        <div class="card-text "><b>Comment : </b><%=review.comment%></div>
+                        <% for(let i = 0 ; i<review.rating ; i++){ %>
+                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                        <% } %>
+    
+                    </div>
+                </div>
+
+            </div>
+        <% } %>
+
     </div>
     
 </div>

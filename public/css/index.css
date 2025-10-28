@@ -110,8 +110,10 @@ main{
     border: 1px solid rgb(43, 38, 48);
 }
 
-.details{
+.details,.takeReview{
     width: 36%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .col p{
@@ -123,7 +125,7 @@ main{
     margin-bottom: 7px;
 }
 
-.review{
+.takeReview{
     background-color:rgb(197, 231, 232);
     padding: 10px;
     border-radius: 10px;
