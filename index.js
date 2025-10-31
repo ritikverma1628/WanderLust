@@ -6,6 +6,7 @@ const ejsMate = require('ejs-mate');
 const ExpressError = require("./utils/expressError");
 const listingsRoutes = require('./routes/listings');
 const reviewRoutes = require('./routes/review')
+const session = require('express-session')
 const app = express();
 
 app.engine("ejs",ejsMate)
@@ -17,6 +18,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'));
 app.use('/listings/:id/reviews',reviewRoutes);
 app.use('/listings',listingsRoutes);
+app.use(session({secret:'secretcode',resave:false, saveUninitialized:true}))
 
 
 async function main(){
