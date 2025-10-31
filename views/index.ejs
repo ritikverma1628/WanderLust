@@ -2,7 +2,8 @@
 <% block('styles').append('<link rel="stylesheet" href="/css/index.css">') %>
 <div>
     <div class="container text-center">
-        <h1 class="heading">All Listings</h1>
+        <h1 class="heading"><p style="font-size: 20px; font-weight: 300;"><%= success %></p> <br> All Listings</h1>
+        
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5 text-center">
             <% for (let listing of listings) {%>
                 <div class="col" style="display:flex; justify-content: center;">
