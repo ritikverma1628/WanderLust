@@ -36,6 +36,7 @@ router.post("/",validateListing, asyncWrap(async(req,res, next)=>{
 
 router.delete("/:id",asyncWrap(async(req,res)=>{
     await Listing.findByIdAndDelete(req.params.id);
+    req.flash('success',"Listing Deleted");
     res.redirect("/listings");
 }))
 
@@ -48,6 +49,7 @@ router.get("/:id/edit",asyncWrap(async(req,res)=>{
 router.patch("/:id", validateListing , asyncWrap(async (req,res)=>{
     const newListing = req.body;
     await Listing.findByIdAndUpdate(req.params.id,newListing);
+    req.flash('success',"Listing Updated");
     res.redirect("/listings");
 }))
 
