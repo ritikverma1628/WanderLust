@@ -43,6 +43,10 @@ router.delete("/:id",asyncWrap(async(req,res)=>{
 
 router.get("/:id/edit",asyncWrap(async(req,res)=>{
     const listing = await Listing.findById(req.params.id);
+    if(!listing){
+        req.flash('error','The listing you are trying to edit does not exist');
+        return res.redirect('/listings')
+    }
     console.log(listing);
     res.render("edit.ejs",{listing});
 }));
@@ -57,6 +61,10 @@ router.patch("/:id", validateListing , asyncWrap(async (req,res)=>{
 router.get("/:id",asyncWrap(async (req,res)=>{
     const id = req.params.id;
     const listing = await Listing.findById(id).populate('reviews');
+    if(!listing){
+        req.flash('error','The Listing you are trying to access may have been deleted');
+        return res.redirect('/listings');
+    }
     res.render("show.ejs",{listing})
 }))
 
