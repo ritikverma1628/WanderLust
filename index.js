@@ -36,6 +36,15 @@ app.use((req,res,next)=>{
     next();
 })
 
+app.get('/demouser', async (req,res)=>{
+    const fakeUser = new User({
+        email:'test123@gmail.com',
+        username :'user'
+    })
+    const registeredUser = await User.register(fakeUser,'testpass');
+    res.send(registeredUser)
+})
+
 app.use('/listings/:id/reviews',reviewRoutes);
 app.use('/listings',listingsRoutes);
 

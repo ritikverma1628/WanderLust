@@ -8,4 +8,6 @@ const userSchema = new mongoose.Schema({
 })
 userSchema.plugin(passportLocalMongoose);   //passport local mongoose itself add fields like username, hashed passwords and salting and hashing
 
-module.exports = mongoose.model('User',userSchema);
+const User = mongoose.model('User',userSchema);
+
+module.exports = User;
