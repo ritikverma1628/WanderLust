@@ -5,7 +5,8 @@ const methodOverride = require("method-override")
 const ejsMate = require('ejs-mate');
 const ExpressError = require("./utils/expressError");
 const listingsRoutes = require('./routes/listings');
-const reviewRoutes = require('./routes/review')
+const reviewRoutes = require('./routes/review');
+const userRoutes = require('./routes/users');
 const session = require('express-session')
 const flash = require('connect-flash');
 const passport = require("passport");
@@ -36,17 +37,18 @@ app.use((req,res,next)=>{
     next();
 })
 
-app.get('/demouser', async (req,res)=>{
-    const fakeUser = new User({
-        email:'test123@gmail.com',
-        username :'user'
-    })
-    const registeredUser = await User.register(fakeUser,'testpass');
-    res.send(registeredUser)
-})
+// app.get('/demouser', async (req,res)=>{
+//     const fakeUser = new User({
+//         email:'test123@gmail.com',
+//         username :'user'
+//     })
+//     const registeredUser = await User.register(fakeUser,'testpass');
+//     res.send(registeredUser)
+// })
 
 app.use('/listings/:id/reviews',reviewRoutes);
 app.use('/listings',listingsRoutes);
+app.use('/', userRoutes);
 
 
 async function main(){

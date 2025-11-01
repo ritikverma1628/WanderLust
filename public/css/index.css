@@ -106,6 +106,9 @@ main{
     margin-top: 15px;
 
 }
+.form .btn:hover{
+    color:#efeded;
+}
 
 .form .form-control{
     border: 1px solid rgb(43, 38, 48);
