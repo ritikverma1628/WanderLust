@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const User = require('../models/user');
+const passport = require('passport')
 
 
 
@@ -9,18 +10,26 @@ router.get('/signUp',(req,res)=>{
 })
 
 router.post('/signUp', async(req,res)=>{
-    const {username,email,password} = req.body;
-    const exist = await User.findOne({username:username})
-    if(exist){
-        req.flash('error','The username is already taken.');
-        return res.redirect('/signUp');
-    }
+    try{const {username,email,password} = req.body;
     const user = new User({username:username, email:email});
     await User.register(user,password);
     req.flash('success','User registration successful.')
     res.redirect('/listings');
+    }catch(e){
+        req.flash('error','The username is already taken.');
+        return res.redirect('/signUp');
+    }
 })
 
+
+
+router.get('/login',(req,res)=>{
+    res.render('users/login.ejs');
+})
+router.post('/login', passport.authenticate('local',{failureRedirect:'/login',failureFlash:true}),(req,res)=>{
+    req.flash('success',"Login successful");
+    res.redirect('/listings');
+})
 module.exports = router;
 
 

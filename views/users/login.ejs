@@ -1,0 +1,25 @@
+<% layout('layout.ejs') %>
+<% block('styles').append('<link rel="stylesheet" href="css/index.css">') %>
+
+<div class="container form">
+    <h2 class="heading">Log into your account...</h2>
+    <form action="/login" method="post" class="needs-validation row g-2 " novalidate>
+
+        <div class="col-12">
+            <label for="username" class="form-label">Enter your username: </label>
+            <input type="text" id="username" class="form-control" name="username" required>
+        </div>
+
+        <div class="col-12">
+            <label for="password" class="form-label">Choose a strong password: </label>
+            <input type="password" id="password" class="form-control" name="password" required>
+        </div>
+        
+
+       <div>
+         <button class="btn btn-outline-alert" style="background-color: rgb(201, 144, 73);">Login</button>
+       </div>
+
+    </form>
+
+</div>
