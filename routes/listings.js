@@ -4,7 +4,7 @@ const asyncWrap = require("../utils/asyncWrap");
 const Listing = require("../models/listings/listings")
 const ExpressError = require("../utils/expressError")
 const {listingValidations} = require('../joiValidations')
-
+const {isLoggedIn} = require('../middleware');
 
 
 //server-side validations for listing forms
@@ -23,7 +23,7 @@ router.get("/", asyncWrap(async(req,res)=>{
 }))
 
 
-router.get("/new",(req,res)=>{
+router.get("/new",isLoggedIn, (req,res)=>{
     res.render("new.ejs");
 })
 router.post("/",validateListing, asyncWrap(async(req,res, next)=>{
@@ -34,14 +34,14 @@ router.post("/",validateListing, asyncWrap(async(req,res, next)=>{
 }))
 
 
-router.delete("/:id",asyncWrap(async(req,res)=>{
+router.delete("/:id",isLoggedIn,asyncWrap(async(req,res)=>{
     await Listing.findByIdAndDelete(req.params.id);
     req.flash('success',"Listing Deleted");
     res.redirect("/listings");
 }))
 
 
-router.get("/:id/edit",asyncWrap(async(req,res)=>{
+router.get("/:id/edit",isLoggedIn,asyncWrap(async(req,res)=>{
     const listing = await Listing.findById(req.params.id);
     if(!listing){
         req.flash('error','The listing you are trying to edit does not exist');

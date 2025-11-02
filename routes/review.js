@@ -5,6 +5,7 @@ const Listing = require("../models/listings/listings")
 const asyncWrap = require("../utils/asyncWrap");
 const ExpressError = require("../utils/expressError")
 const {reviewValidations} = require('../joiValidations')
+const {isLoggedIn} = require('../middleware');
 
 
 
@@ -18,7 +19,7 @@ const validateReview = (req,res,next)=>{
     }
 }
 
-router.post('/', validateReview, asyncWrap(async(req,res)=>{
+router.post('/', isLoggedIn, validateReview, asyncWrap(async(req,res)=>{
     let review = await Review.create(req.body.review)
     const listing = await Listing.findById(req.params.id);
     listing.reviews.push(review);
@@ -28,7 +29,7 @@ router.post('/', validateReview, asyncWrap(async(req,res)=>{
 }))
 
 //deleting the review
-router.delete("/:reviewId", asyncWrap(async(req,res)=>{
+router.delete("/:reviewId",isLoggedIn ,asyncWrap(async(req,res)=>{
     const listingId = req.params.id;
     const reviewId = req.params.reviewId;
 
