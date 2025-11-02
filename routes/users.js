@@ -12,9 +12,14 @@ router.get('/signUp',(req,res)=>{
 router.post('/signUp', async(req,res)=>{
     try{const {username,email,password} = req.body;
     const user = new User({username:username, email:email});
-    await User.register(user,password);
-    req.flash('success','User registration successful.')
-    res.redirect('/listings');
+    const registeredUser = await User.register(user,password);
+    req.login(registeredUser,((err)=>{
+        if(err){
+            return next(err);
+        }
+        req.flash('success','User registration successful.')
+        res.redirect('/listings');
+    }))
     }catch(e){
         req.flash('error','The username is already taken.');
         return res.redirect('/signUp');
