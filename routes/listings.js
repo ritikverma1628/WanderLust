@@ -28,6 +28,7 @@ router.get("/new",isLoggedIn, (req,res)=>{
 })
 router.post("/",validateListing, asyncWrap(async(req,res, next)=>{
     const listing = req.body;
+    listing.owner=req.user._id;
     await Listing.create(listing);
     req.flash('success',"New Listing created");
     res.redirect("/listings")
@@ -60,7 +61,7 @@ router.patch("/:id", validateListing , asyncWrap(async (req,res)=>{
 
 router.get("/:id",asyncWrap(async (req,res)=>{
     const id = req.params.id;
-    const listing = await Listing.findById(id).populate('reviews');
+    const listing = await Listing.findById(id).populate('reviews').populate('owner');
     if(!listing){
         req.flash('error','The Listing you are trying to access may have been deleted');
         return res.redirect('/listings');

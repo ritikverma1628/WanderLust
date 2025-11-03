@@ -10,7 +10,10 @@ main().then(()=>{
 
 
 const initDB = async ()=>{
-    // await Listing.deleteMany({})
+    await Listing.deleteMany({})
+    data.forEach((listing)=>{
+        listing.owner = "69064393ade1a4c633c0ac8c";
+    })
     await Listing.insertMany(data);
 }
 initDB().then(()=>{
