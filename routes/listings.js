@@ -2,19 +2,7 @@ const express = require('express')
 const router = express.Router();
 const asyncWrap = require("../utils/asyncWrap");
 const Listing = require("../models/listings/listings")
-const ExpressError = require("../utils/expressError")
-const {listingValidations} = require('../joiValidations')
-const {isLoggedIn , isOwner} = require('../middleware');
-
-
-//server-side validations for listing forms
-const validateListing = (req,res,next)=>{
-    const {error} = listingValidations.validate(req.body);
-    if(error){
-        throw new ExpressError(404,error)
-    }
-    else{next()};
-}
+const {isLoggedIn , isOwner, validateListing} = require('../middleware');
 
 
 router.get("/", asyncWrap(async(req,res)=>{

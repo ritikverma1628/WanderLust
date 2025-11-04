@@ -3,21 +3,8 @@ const router = express.Router({mergeParams:true});
 const Review = require('../models/reviews');
 const Listing = require("../models/listings/listings")
 const asyncWrap = require("../utils/asyncWrap");
-const ExpressError = require("../utils/expressError")
-const {reviewValidations} = require('../joiValidations')
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn, validateReview} = require('../middleware');
 
-
-
-const validateReview = (req,res,next)=>{
-    const {error} = reviewValidations.validate(req.body)
-    if(error){
-        throw new ExpressError(404, error)
-    }
-    else{
-        next();
-    }
-}
 
 router.post('/', isLoggedIn, validateReview, asyncWrap(async(req,res)=>{
     let review = await Review.create(req.body.review)

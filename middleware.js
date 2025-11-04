@@ -1,4 +1,6 @@
-const Listing = require('./models/listings/listings')
+const Listing = require('./models/listings/listings');
+const ExpressError = require('./utils/expressError');
+const {listingValidations, reviewValidations} = require('./joiValidations');
 
 
 module.exports.isLoggedIn = (req,res,next)=>{
@@ -26,4 +28,22 @@ module.exports.isOwner = async(req,res,next)=>{
         return res.redirect(`/listings/${id}`)
     }
     next();
+}
+
+module.exports.validateListing = (req,res,next)=>{
+    const {error} = listingValidations.validate(req.body);
+    if(error){
+        throw new ExpressError(404,error)
+    }
+    else{next()};
+}
+
+module.exports.validateReview = (req,res,next)=>{
+    const {error} = reviewValidations.validate(req.body)
+    if(error){
+        throw new ExpressError(404, error)
+    }
+    else{
+        next();
+    }
 }
