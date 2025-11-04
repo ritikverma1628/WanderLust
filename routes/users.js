@@ -33,8 +33,8 @@ router.get('/login',(req,res)=>{
 })
 router.post('/login', saveRedirectUser, passport.authenticate('local',{failureRedirect:'/login',failureFlash:true}),(req,res)=>{
     req.flash('success',"Login successful");
-    console.log(res.locals.redirectUser);
-    res.redirect(res.locals.redirectUser);
+    const redirect = res.locals.redirectUser || '/listings'
+    res.redirect(redirect);
 })
 
 router.get('/logOut',(req,res)=>{
