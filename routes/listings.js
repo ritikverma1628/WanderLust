@@ -4,7 +4,7 @@ const asyncWrap = require("../utils/asyncWrap");
 const Listing = require("../models/listings/listings")
 const ExpressError = require("../utils/expressError")
 const {listingValidations} = require('../joiValidations')
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn , isOwner} = require('../middleware');
 
 
 //server-side validations for listing forms
@@ -35,14 +35,14 @@ router.post("/",validateListing, asyncWrap(async(req,res, next)=>{
 }))
 
 
-router.delete("/:id",isLoggedIn,asyncWrap(async(req,res)=>{
+router.delete("/:id" , isLoggedIn , isOwner , asyncWrap(async(req,res)=>{
     await Listing.findByIdAndDelete(req.params.id);
     req.flash('success',"Listing Deleted");
     res.redirect("/listings");
 }))
 
 
-router.get("/:id/edit",isLoggedIn,asyncWrap(async(req,res)=>{
+router.get("/:id/edit" , isLoggedIn , isOwner , asyncWrap(async(req,res)=>{
     const listing = await Listing.findById(req.params.id);
     if(!listing){
         req.flash('error','The listing you are trying to edit does not exist');
@@ -51,7 +51,7 @@ router.get("/:id/edit",isLoggedIn,asyncWrap(async(req,res)=>{
     console.log(listing);
     res.render("edit.ejs",{listing});
 }));
-router.patch("/:id", validateListing , asyncWrap(async (req,res)=>{
+router.patch("/:id" , validateListing , isOwner , asyncWrap(async (req,res)=>{
     const newListing = req.body;
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     req.flash('success',"Listing Updated");

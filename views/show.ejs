@@ -16,14 +16,13 @@
             <p><b>Location: </b><%= listing.location %></p>
             <p><b>Country: </b><%= listing.country %></p>
         </div>
-        <%  if( currUser && currUser._id.equals(listing.owner._id)) {%>
-            <div class="buttons">
-                <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary">Edit</a>
-                <form class="d-inline" action="/listings/<%=listing._id%>?_method=delete" method="post">
-                    <button class="btn btn-primary">Delete</button>
-                </form>
-            </div>
-        <% } %>
+        
+        <div class="buttons">
+            <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary">Edit</a>
+            <form class="d-inline" action="/listings/<%=listing._id%>?_method=delete" method="post">
+                <button class="btn btn-primary">Delete</button>
+            </form>
+        </div>
 
     </div>
 
