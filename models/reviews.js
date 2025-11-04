@@ -6,7 +6,12 @@ const reviewSchema = new mongoose.Schema({
         type:Number,
         min:1,
         max:5,
-    }},{timestamps:true});
+    },
+    author:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }
+},{timestamps:true});
 
 const Review = mongoose.model('Review',reviewSchema)
 

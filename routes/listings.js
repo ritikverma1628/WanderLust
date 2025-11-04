@@ -49,7 +49,8 @@ router.patch("/:id" , validateListing , isOwner , asyncWrap(async (req,res)=>{
 
 router.get("/:id",asyncWrap(async (req,res)=>{
     const id = req.params.id;
-    const listing = await Listing.findById(id).populate('reviews').populate('owner');
+    const listing = await Listing.findById(id).populate({path:'reviews', populate:{path:'author', model:'User'}}).populate('owner');
+    console.log(listing)
     if(!listing){
         req.flash('error','The Listing you are trying to access may have been deleted');
         return res.redirect('/listings');

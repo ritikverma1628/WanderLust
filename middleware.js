@@ -1,4 +1,5 @@
 const Listing = require('./models/listings/listings');
+const Review = require('./models/reviews');
 const ExpressError = require('./utils/expressError');
 const {listingValidations, reviewValidations} = require('./joiValidations');
 
@@ -45,5 +46,18 @@ module.exports.validateReview = (req,res,next)=>{
     }
     else{
         next();
+    }
+}
+
+module.exports.isReviewAuthor = async (req,res,next)=>{
+    const {id,reviewId}=req.params;
+    const review = await Review.findById(reviewId).populate('author');
+    console.log(review)
+    if(currUser && review.author._id.equals(currUser._id)){
+        next();
+    }
+    else{
+        req.flash('error',"You are no the author of this review.");
+        res.redirect(`/listings/${id}`)
     }
 }
