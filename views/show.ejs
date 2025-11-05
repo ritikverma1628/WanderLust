@@ -9,9 +9,9 @@
         <div class="col">
             <img src="<%= listing.image %>" alt="" style="height: 300px; width: 100%;">
         </div>
-        <div class="col">
+        <div class="col" style="font-size: 18px; margin-left: 5px;">
+            <h6 style="font-weight: 400; margin-top: 10px; text-align: center; font-size: 20px;" ><i><%= listing.description %></i></h6>
             <p><b>Owned By: </b><%= listing.owner.username %></p>
-            <h6 style="font-weight: 400;"><%= listing.description %></h6>
             <p><b>Price/night: </b>&#8377; <%= listing.price.toLocaleString('en-IN') %></p>
             <p><b>Location: </b><%= listing.location %></p>
             <p><b>Country: </b><%= listing.country %></p>
@@ -62,7 +62,7 @@
                 <div class="card h-100">
                     <div class="card-body ">
                         <div class="card-text"><b>Written by : </b><%= review.author.username %></div>           
-                        <div class="card-text "><b>Comment : </b><%=review.comment%></div>
+                        <div class="card-text " ><b>Comment : </b><%=review.comment%></div>
                         <b>Rating : </b>
                         <% for(let i = 0 ; i<review.rating ; i++){ %>
                             <i class="fa-solid fa-star" style="color: #ffd027;"></i>
