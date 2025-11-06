@@ -52,8 +52,7 @@ module.exports.validateReview = (req,res,next)=>{
 module.exports.isReviewAuthor = async (req,res,next)=>{
     const {id,reviewId}=req.params;
     const review = await Review.findById(reviewId).populate('author');
-    console.log(review)
-    if(currUser && review.author._id.equals(currUser._id)){
+    if(res.locals.currUser && review.author._id.equals(res.locals.currUser._id)){
         next();
     }
     else{
