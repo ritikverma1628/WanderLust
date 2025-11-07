@@ -19,9 +19,3 @@
   })
 })()
 
-const input = document.getElementById('rating')
-const output = document.getElementById('value');
-output.textContent= input.value;
-input.addEventListener('input',()=>{
-    output.textContent = input.value;
-})
