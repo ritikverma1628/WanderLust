@@ -1,12 +1,19 @@
 const express = require('express')
+const multer = require('multer')
 const router = express.Router();
 const {isLoggedIn , isOwner, validateListing} = require('../middleware');
 const listingsController = require('../controller/listings')
 
+const upload = multer({dest:'uploads/'})
 router
     .route('/')
     .get( listingsController.getListings)
-    .post( validateListing, listingsController.postListing)
+    // .post( validateListing, listingsController.postListing)
+    .post(upload.single('image'), (req,res)=>{
+        console.log(req.file);
+        console.log(req.body)
+        res.send(req.file);
+    })
 
 router.get("/new",isLoggedIn, listingsController.renderNewForm)
 

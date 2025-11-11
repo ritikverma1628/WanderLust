@@ -4,33 +4,33 @@
     <div class="container form">
 
         <h2 class="heading">Create a new Listing</h2>
-        <form action="/listings" method="post" class="row g-2 needs-validation" novalidate>
+        <form action="/listings" method="post" class="row g-2 needs-validation" novalidate enctype="multipart/form-data">
             <div class="col-12">
-                <label for="title" class="form-label">Title</label>
+                <label for="title" class="form-label">Title: </label>
                 <input type="text" id="title" name="title" class="form-control" required>
                 <div class="valid-feedback">Looks good</div>
             </div>
             <div class="col-12 ">
-                <label for="description" class="form-label">Description</label>
+                <label for="description" class="form-label">Description: </label>
                 <input type="text" id="description" name="description" class="form-control" required>
                 <div class="valid-feedback">Looks nice</div>
             </div>
             <div class="col-12">
-                <label for="image" class="form-label">Image address</label>
-                <input type="url" id="image" class="form-control" name="image" >
+                <label for="image" class="form-label">Upload Image: </label>
+                <input type="file" id="image" class="form-control" name="image" >
             </div>
             <div class="col-sm-4">
-                <label for="price" class="form-label">Price/night</label>
+                <label for="price" class="form-label">Price/night: </label>
                 <input type="number" id="price" name="price" class="form-control" required>
                 <div class="invalid-feedback">Enter a valid price</div>
             </div>
             <div class="col-sm-8 ">
-                <label for="country" class="form-label">Country</label>
+                <label for="country" class="form-label">Country: </label>
                 <input type="text" id="country" name="country" class="form-control" required>
                 <div class="invalid-feedback">Enter a correct country</div>
             </div>
             <div class="col-12">
-                <label for="location" class="form-label">Location</label>
+                <label for="location" class="form-label">Location: </label>
                 <input type="text" id="location" name="location" class="form-control" required>
                 <div class="invalid-feedback">Enter correct location</div>
             </div>
