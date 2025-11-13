@@ -3,8 +3,9 @@ const multer = require('multer')
 const router = express.Router();
 const {isLoggedIn , isOwner, validateListing} = require('../middleware');
 const listingsController = require('../controller/listings')
+const storage = require('../cloudConfig')
 
-const upload = multer({dest:'uploads/'})
+const upload = multer({storage})
 router
     .route('/')
     .get( listingsController.getListings)
