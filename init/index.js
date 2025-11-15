@@ -13,6 +13,10 @@ const initDB = async ()=>{
     await Listing.deleteMany({})
     data.forEach((listing)=>{
         listing.owner = "69064393ade1a4c633c0ac8c";
+        listing.image = {
+            url:listing.image,
+            fieldname:'WanderLustImages'
+        }
     })
     await Listing.insertMany(data);
 }

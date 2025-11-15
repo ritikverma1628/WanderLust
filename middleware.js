@@ -32,6 +32,11 @@ module.exports.isOwner = async(req,res,next)=>{
 }
 
 module.exports.validateListing = (req,res,next)=>{
+    req.body.image = 
+    {
+        url:req.file.path,
+        fieldname:req.file.fieldname
+    };
     const {error} = listingValidations.validate(req.body);
     if(error){
         throw new ExpressError(404,error)

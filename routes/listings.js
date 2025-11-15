@@ -9,12 +9,7 @@ const upload = multer({storage})
 router
     .route('/')
     .get( listingsController.getListings)
-    // .post( validateListing, listingsController.postListing)
-    .post(upload.single('image'), (req,res)=>{
-        console.log(req.file);
-        console.log(req.body)
-        res.send(req.file);
-    })
+    .post(upload.single('image'), validateListing, listingsController.postListing)
 
 router.get("/new",isLoggedIn, listingsController.renderNewForm)
 
