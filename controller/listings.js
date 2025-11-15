@@ -31,7 +31,9 @@ module.exports.renderEditForm = asyncWrap(async(req,res)=>{
         return res.redirect('/listings')
     }
     console.log(listing);
-    res.render("edit.ejs",{listing});
+    let originalImage = listing.image.url;
+    originalImage = originalImage.replace('/upload','/upload/w_250')
+    res.render("edit.ejs",{listing,originalImage});
 })
 
 module.exports.editListing = asyncWrap(async (req,res)=>{

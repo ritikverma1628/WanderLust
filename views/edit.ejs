@@ -12,6 +12,10 @@
                 <label for="description" class="form-label">Description</label>
                 <input type="text" id="description" name="description" value="<%= listing.description %>" class="form-control" required>
             </div>
+            <div class="col-12" style="text-align: center;">
+                    <p style="margin-bottom: 5px;">Current Image: </p>
+                    <img style="border-radius: 5px;" src="<%= originalImage %>" alt=""  >
+            </div>
             <div class="col-12">
                 <label for="image" class="form-label">Upload New Image: </label>
                 <input type="file" id="image" class="form-control" name="image" >
