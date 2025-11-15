@@ -16,7 +16,7 @@ router.get("/new",isLoggedIn, listingsController.renderNewForm)
 router
     .route('/:id')
     .delete( isLoggedIn , isOwner , listingsController.destroyListing)
-    .patch( validateListing , isOwner , listingsController.editListing)
+    .patch(upload.single('image') , validateListing , isOwner , listingsController.editListing)
     .get( listingsController.showListing)
 
 

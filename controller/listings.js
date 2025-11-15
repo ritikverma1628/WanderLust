@@ -36,6 +36,12 @@ module.exports.renderEditForm = asyncWrap(async(req,res)=>{
 
 module.exports.editListing = asyncWrap(async (req,res)=>{
     const newListing = req.body;
+    if(req.file){
+        newListing.image = {
+            url:req.file.path,
+            fieldname:req.file.fieldname
+        };
+    }
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     req.flash('success',"Listing Updated");
     res.redirect("/listings");
