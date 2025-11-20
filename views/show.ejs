@@ -72,35 +72,40 @@
 
 <hr style="width: 100%; margin-right: auto; margin-left: auto;">
 
-<% if(listing.reviews.length>0) {%>
-    <h3 class="mb-5">All reviews</h3>
-    <div class="allReviews row row-cols-2 g-5">
-    
-    
-        <% for (let review of listing.reviews) {%>
-            <div class="col ">
-                
-                <div class="card h-100">
-                    <div class="card-body ">
-                        <div class="card-text"><b>Written by : </b><%= review.author.username %></div>           
-                        <div class="card-text " ><b>Comment : </b><%=review.comment%></div>
-                        <b>Rating : </b>
-                        <% for(let i = 0 ; i<review.rating ; i++){ %>
-                            <i class="fa-solid fa-star" style="color: #ffd027;"></i>
-                        <% } %>
-    
+    <% if(listing.reviews.length>0) {%>
+        <h3 class="mb-5">All reviews</h3>
+        <div class="allReviews row row-cols-2 g-5">
+        
+            <% for (let review of listing.reviews) {%>
+                <div class="col ">
+                    
+                    <div class="card h-100">
+                        <div class="card-body ">
+                            <div class="card-text"><b>Written by : </b><%= review.author.username %></div>           
+                            <div class="card-text " ><b>Comment : </b><%=review.comment%></div>
+                            <b>Rating : </b>
+                            <% for(let i = 0 ; i<review.rating ; i++){ %>
+                                <i class="fa-solid fa-star" style="color: #ffd027;"></i>
+                            <% } %>
+        
+                        </div>
+                        <div class="card-footer">
+                            <form action="/listings/<%=listing._id%>/reviews/<%= review._id %>?_method=delete" method="post">
+                                <button class="btn btn-outline-dark">Delete</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <form action="/listings/<%=listing._id%>/reviews/<%= review._id %>?_method=delete" method="post">
-                            <button class="btn btn-outline-dark">Delete</button>
-                        </form>
-                    </div>
+        
                 </div>
-    
-            </div>
-        <% } %>
-    
-    </div>
+            <% } %>
+        
+        </div>
     <% } %>
+
+
+    <div class="map">
+        <h3>Where you will be: </h3>
+        <div id="map"></div>
+    </div>
     
 </div>
