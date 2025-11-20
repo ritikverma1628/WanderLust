@@ -3,13 +3,13 @@ const multer = require('multer')
 const router = express.Router();
 const {isLoggedIn , isOwner, validateListing} = require('../middleware');
 const listingsController = require('../controller/listings')
-const storage = require('../cloudConfig')
 
-const upload = multer({storage})
+const upload = multer({storage:multer.memoryStorage()})
+
 router
     .route('/')
     .get( listingsController.getListings)
-    .post(upload.single('image'), validateListing, listingsController.postListing)
+    .post(upload.single('image'),  validateListing, listingsController.postListing)
 
 router.get("/new",isLoggedIn, listingsController.renderNewForm)
 

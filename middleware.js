@@ -2,7 +2,7 @@ const Listing = require('./models/listings/listings');
 const Review = require('./models/reviews');
 const ExpressError = require('./utils/expressError');
 const {listingValidations, reviewValidations} = require('./joiValidations');
-
+const {uploadToCloud} = require('./utils/uploadToCloud')
 
 module.exports.isLoggedIn = (req,res,next)=>{
     if(!req.isAuthenticated()){
@@ -31,12 +31,12 @@ module.exports.isOwner = async(req,res,next)=>{
     next();
 }
 
-module.exports.validateListing = (req,res,next)=>{
-    req.body.image = 
-    {
-        url:req.file.path,
-        fieldname:req.file.fieldname
-    };
+module.exports.validateListing = async(req,res,next)=>{
+    const result = await uploadToCloud(req.file.buffer);
+    req.body.image = {
+        url:result.secure_url,
+        fieldname:result.original_filename
+    }
     const {error} = listingValidations.validate(req.body);
     if(error){
         throw new ExpressError(404,error)
