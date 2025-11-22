@@ -52,10 +52,9 @@ module.exports.editListing = asyncWrap(async (req,res)=>{
 module.exports.showListing = asyncWrap(async (req,res)=>{
     const id = req.params.id;
     const listing = await Listing.findById(id).populate({path:'reviews', populate:{path:'author', model:'User'}}).populate('owner');
-    console.log(listing)
     if(!listing){
         req.flash('error','The Listing you are trying to access may have been deleted');
         return res.redirect('/listings');
     }
-    res.render("show.ejs",{listing})
+    res.render("show.ejs",{listing, mapToken:process.env.MAPBOX_TOKEN})
 })
