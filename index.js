@@ -41,15 +41,6 @@ app.use((req,res,next)=>{
     next();
 })
 
-// app.get('/demouser', async (req,res)=>{
-//     const fakeUser = new User({
-//         email:'test123@gmail.com',
-//         username :'user'
-//     })
-//     const registeredUser = await User.register(fakeUser,'testpass');
-//     res.send(registeredUser)
-// })
-
 app.use('/listings/:id/reviews',reviewRoutes);
 app.use('/listings',listingsRoutes);
 app.use('/', userRoutes);
@@ -64,14 +55,8 @@ main().then(()=>{
     console.log("Error connecting database")
 });
 
-
 app.listen(3000,()=>{
     console.log("Server listening");
-})
-
-
-app.get("/",(req,res)=>{
-    res.send("Hello, this is home page");
 })
 
 app.use("/",(req,res,next)=>{
@@ -80,10 +65,5 @@ app.use("/",(req,res,next)=>{
 
 //eroor handling middleware
 app.use((err,req,res,next)=>{
-    // console.log(err.message);
-    // next();
-
-    // res.status(err.statusCode).send(err.message);
     res.render('error.ejs', {err})
-
 })
