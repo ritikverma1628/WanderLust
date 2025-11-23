@@ -4,3 +4,5 @@ mapboxgl.accessToken = mapToken;
         center: coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
         zoom: 9 // starting zoom
     });
+
+    new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
