@@ -1,5 +1,7 @@
 const Listing = require('../models/listings/listings')
 const asyncWrap = require("../utils/asyncWrap");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const geocodingService = mbxGeocoding({ accessToken:process.env.MAPBOX_TOKEN});
 
 module.exports.getListings = asyncWrap(async(req,res)=>{
     const listings = await Listing.find({});
@@ -11,6 +13,11 @@ module.exports.renderNewForm = (req,res)=>{
 }
 
 module.exports.postListing = asyncWrap(async(req,res, next)=>{
+    const response = await geocodingService.forwardGeocode({
+        query: req.body.location,
+        limit: 1
+    })
+    .send()
     const listing = req.body;
     listing.owner=req.user._id;
     await Listing.create(listing);
