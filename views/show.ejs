@@ -1,7 +1,8 @@
 <% layout('layout') %>
 
 <script>
-    const mapToken = "<%=mapToken%>" ;
+    const mapToken = "<%= mapToken %>" ;
+    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>
 </script>
 
 <div class="container ">

@@ -20,6 +20,7 @@ module.exports.postListing = asyncWrap(async(req,res, next)=>{
     .send()
     const listing = req.body;
     listing.owner=req.user._id;
+    listing.geometry = response.body.features[0].geometry;
     await Listing.create(listing);
     req.flash('success',"New Listing created");
     res.redirect("/listings")
