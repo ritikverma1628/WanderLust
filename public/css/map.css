@@ -18,3 +18,34 @@
     border-radius: 50%;
     cursor: pointer; 
 }
+
+.mapboxgl-popup {
+    max-width: 20px;
+}
+
+.mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        background-color: rgb(232, 235, 238);
+}
+
+.mapboxgl-popup-close-button{
+    font-size:medium;
+    margin: 1px 4px 1px;
+    padding: 1px 4px 1px;
+}
+
+.mapboxgl-popup-content h3{
+    margin: auto;
+    margin-top: 9px;
+    color: rgb(255, 0, 0);
+}
+
+.mapboxgl-popup-content p{
+    font-size: small;
+    margin-bottom: 0px;
+}
+
+.mapboxgl-canvas{
+    border-radius: 10px;
+}
