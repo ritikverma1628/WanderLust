@@ -10,18 +10,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-                <a class="nav-link active" href="/listings">All Listings</a>
-                <a class="nav-link active" href="/listings/new">New Listing</a>
+                <a class="nav-link active" href="/listings">Explore</a>
             </div>
 
             <div class="navbar-nav ms-auto">
+                <a class="nav-link active" href="/listings/new">Airbnb your place</a>
                 <% if(!currUser){ %>
-                    <a class="nav-link active" aria-current="page" href="/signUp">SignUp</a>
-                    <a class="nav-link active" href="/logIn">LogIn</a>
+                    <a class="nav-link active" aria-current="page" href="/signUp"><b>SignUp</b></a>
+                    <a class="nav-link active" href="/logIn"><b>LogIn</b></a>
                 <% } %>
                 <% if(currUser){ %>
-                    <a class="nav-link active" href="/logOut">LogOut</a>
+                    <a class="nav-link active" href="/logOut"><b>LogOut</b></a>
                 <% } %>
             </div>
                 
