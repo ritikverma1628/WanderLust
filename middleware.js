@@ -39,9 +39,9 @@ module.exports.validateListing = async(req,res,next)=>{
     }
     const {error} = listingValidations.validate(req.body);
     if(error){
-        throw new ExpressError(404,error)
+       return next(new ExpressError(404,error))
     }
-    else{next()};
+    next();
 }
 
 module.exports.validateReview = (req,res,next)=>{
