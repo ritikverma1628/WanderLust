@@ -38,7 +38,7 @@ module.exports.renderEditForm = asyncWrap(async(req,res)=>{
         req.flash('error','The listing you are trying to edit does not exist');
         return res.redirect('/listings')
     }
-    console.log(listing);
+    // console.log(listing);
     let originalImage = listing.image.url;
     originalImage = originalImage.replace('/upload','/upload/w_250')
     res.render("edit.ejs",{listing,originalImage});
@@ -46,12 +46,6 @@ module.exports.renderEditForm = asyncWrap(async(req,res)=>{
 
 module.exports.editListing = asyncWrap(async (req,res)=>{
     const newListing = req.body;
-    if(req.file){
-        newListing.image = {
-            url:req.file.path,
-            fieldname:req.file.fieldname
-        };
-    }
     await Listing.findByIdAndUpdate(req.params.id,newListing);
     req.flash('success',"Listing Updated");
     res.redirect("/listings");
