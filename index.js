@@ -36,7 +36,7 @@ async function main() {
 
     const sessionOptions = {
       store:store,
-      secret: "secretcode",
+      secret: process.env.SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
