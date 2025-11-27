@@ -64,7 +64,11 @@ async function main() {
     app.use("/listings", listingsRoutes);
     app.use("/", userRoutes);
 
-    app.use("/", (req, res, next) => {
+    app.use("/", (req, res) => {
+      res.redirect("/listings");
+    });
+
+    app.use((req, res, next) => {
       next(new ExpressError(404, "Page not found!"));
     });
 
