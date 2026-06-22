@@ -5,8 +5,21 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const geocodingService = mbxGeocoding({ accessToken:process.env.MAPBOX_TOKEN});
 
 module.exports.getListings = asyncWrap(async(req,res)=>{
-    const listings = await Listing.find({});
-    res.render("index.ejs",{listings})
+    const { search } = req.query;
+    let listings;
+    if (search) {
+        listings = await Listing.find({
+            $or: [
+                { title: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+                { country: { $regex: search, $options: "i" } }
+            ]
+        });
+        
+    } else {
+        listings = await Listing.find({});
+    }
+    res.render("index.ejs",{listings, search})
 })
 
 module.exports.renderNewForm = (req,res)=>{
@@ -60,6 +73,7 @@ module.exports.editListing = asyncWrap(async (req,res)=>{
 })
 
 module.exports.showListing = asyncWrap(async (req,res)=>{
+    console.log("i am in show");
     const id = req.params.id;
     console.log(id);
     const listing = await Listing.findById(id).populate({path:'reviews', populate:{path:'author', model:'User'}}).populate('owner');

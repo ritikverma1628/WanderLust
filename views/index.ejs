@@ -12,24 +12,36 @@
         </div>
         
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 text-center">
-            <% for (let listing of listings) {%>
-                <div class="col" style="display:flex; justify-content: center;">
-                    <a href="/listings/<%= listing._id %>">
-                        <div class="card h-100" style="width:13rem; border: 0px; margin-bottom: 1px;">
-                        <img src="<%= listing.image.url %>" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body"style="text-align:start; padding-top: 0px; padding-left: 5px;">
-                            <h6 class="card-title" style="margin-bottom: 2px;">
-                                <%= listing.title %>
-                            </h6>
-                            <p class="card-text" style="font-size: small;">
-                               &#8377; <%= listing.price.toLocaleString('en-IN') %> for 2 nights
-                            </p>
-                            
-                        </div>
-                        </div>
-                    </a>
+            <% if(listings.length===0){%>
+                <div style="text-align:center; width:80% ; margin-right: auto; margin-left: auto; margin-top: 70px; margin-bottom: 70px;">
+                    <h3>No listings found</h3>
+                    <%if(search){%>
+                        <h6 class="faded-text" style="margin-bottom:0px; color:grey">There are no listings for "<%=search%>" in our records</h6>
+                    <%}%>
+                    <br>    
+                    <a href="/listings" class="btn btn-outline-danger inline-hover" style="text-decoration: none; color: rgb(0, 0, 0); --hover-color: white;">Show all listings</a>
                 </div>
             <% } %>
+            <%if(listings.length!=0){%>
+                <% for (let listing of listings) {%>  
+                    <div class="col" style="display:flex; justify-content: center;">
+                        <a href="/listings/<%= listing._id %>">
+                            <div class="card h-100" style="width:13rem; border: 0px; margin-bottom: 1px;">
+                            <img src="<%= listing.image.url %>" class="card-img-top img-fluid" alt="...">
+                            <div class="card-body"style="text-align:start; padding-top: 0px; padding-left: 5px;">
+                                <h6 class="card-title" style="margin-bottom: 2px;">
+                                    <%= listing.title %>
+                                </h6>
+                                <p class="card-text" style="font-size: small;">
+                                &#8377; <%= listing.price.toLocaleString('en-IN') %> for 2 nights
+                                </p>
+                                
+                            </div>
+                            </div>
+                        </a>
+                    </div>
+                <% } %>
+            <%}%>
         </div>
     </div>
 </div> 

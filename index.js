@@ -98,6 +98,7 @@ async function main() {
       res.locals.error = req.flash("error");
       //req.user is a property which is created in req object by passport and contains the currently logged in user
       res.locals.currUser = req.user;
+      res.locals.search = req.query.search || "";
       next();
     });
 
@@ -105,8 +106,9 @@ async function main() {
     app.use("/listings/:id/reviews", reviewRoutes);
     app.use("/listings", listingsRoutes);
     app.use("/", userRoutes);
+  
 
-    app.use("/", (req, res) => {
+    app.get("/", (req, res) => {
       res.redirect("/listings");
     });
 
