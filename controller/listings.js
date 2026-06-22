@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Listing = require('../models/listings/listings')
 const asyncWrap = require("../utils/asyncWrap");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
@@ -18,8 +19,15 @@ module.exports.postListing = asyncWrap(async(req,res, next)=>{
         limit: 1
     })
     .send()
+    
     const listing = req.body;
     listing.owner=req.user._id;
+    
+    if (!response.body.features || response.body.features.length === 0) {
+        req.flash('error', "Could not find coordinates for that location. Please try a different location.");
+        return res.redirect("/listings/new");
+    }
+    
     listing.geometry = response.body.features[0].geometry;
     await Listing.create(listing);
     req.flash('success',"New Listing created");
@@ -53,7 +61,9 @@ module.exports.editListing = asyncWrap(async (req,res)=>{
 
 module.exports.showListing = asyncWrap(async (req,res)=>{
     const id = req.params.id;
+    console.log(id);
     const listing = await Listing.findById(id).populate({path:'reviews', populate:{path:'author', model:'User'}}).populate('owner');
+    console.log(listing);
     if(!listing){
         req.flash('error','The Listing you are trying to access may have been deleted');
         return res.redirect('/listings');

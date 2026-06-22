@@ -1,3 +1,5 @@
+//joi supports server side validations
+
 const joi = require('joi')
 
 exports.listingValidations = joi.object({

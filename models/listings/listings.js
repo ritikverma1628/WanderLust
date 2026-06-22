@@ -36,6 +36,9 @@ const listingsSchema = new mongoose.Schema({
     }
 }) 
 
+//this is a post type of middleware of mongoose itself 
+//it says if 'findOneAndDelete' method is called for Listing model, then execute the specified callback post the execution of findOneAndDelete method
+// schema.post(method, callback)
 listingsSchema.post('findOneAndDelete',async(listing)=>{
     if(listing.reviews.length>0)
         await Review.deleteMany({_id:{$in:listing.reviews}})

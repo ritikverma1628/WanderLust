@@ -6,6 +6,20 @@ const userSchema = new mongoose.Schema({
         required:true
     }
 })
+// What this plugin does internally?
+// It automatically adds:
+
+// ✅ Fields
+// username
+// hash
+// salt
+
+// ✅ Methods
+// register()
+// authenticate()
+// setPassword()
+// changePassword()
+
 userSchema.plugin(passportLocalMongoose);   //passport local mongoose itself add fields like username, hashed passwords and salting and hashing
 
 const User = mongoose.model('User',userSchema);
