@@ -5,21 +5,33 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const geocodingService = mbxGeocoding({ accessToken:process.env.MAPBOX_TOKEN});
 
 module.exports.getListings = asyncWrap(async(req,res)=>{
-    const { search } = req.query;
-    let listings;
+    const { search, country, minPrice, maxPrice } = req.query;
+    let queryObj = {};
+
     if (search) {
-        listings = await Listing.find({
-            $or: [
-                { title: { $regex: search, $options: "i" } },
-                { location: { $regex: search, $options: "i" } },
-                { country: { $regex: search, $options: "i" } }
-            ]
-        });
-        
-    } else {
-        listings = await Listing.find({});
+        queryObj.$or = [
+            { title: { $regex: search, $options: "i" } },
+            { location: { $regex: search, $options: "i" } },
+            { country: { $regex: search, $options: "i" } }
+        ];
     }
-    res.render("index.ejs",{listings, search})
+
+    if (country) {
+        queryObj.country = { $regex: country, $options: "i" };
+    }
+
+    if (minPrice || maxPrice) {
+        queryObj.price = {};
+        if (minPrice) {
+            queryObj.price.$gte = Number(minPrice);
+        }
+        if (maxPrice) {
+            queryObj.price.$lte = Number(maxPrice);
+        }
+    }
+
+    const listings = await Listing.find(queryObj);
+    res.render("index.ejs", { listings, search, country, minPrice, maxPrice });
 })
 
 module.exports.renderNewForm = (req,res)=>{

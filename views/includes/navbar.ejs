@@ -1,37 +1,80 @@
 <nav class="navbar navbar-expand-lg ">
+
     <div class="container-fluid">
+
+
         <a class="navbar-brand" href="#">
             <i class="fa-regular fa-compass"></i>
             <span>WanderLust</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+
+        
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            
+            
             <div class="navbar-nav">
                 <a class="nav-link active" href="/listings">Explore</a>
             </div>
 
+            
             <div class="navbar-nav ms-auto">
-                <a class="nav-link active" href="/listings/new">Airbnb your place</a>
+
+                <a class="nav-link active" href="/listings/new">Become Host</a>
+
+
                 <form class="d-flex search-form my-2 my-lg-0" role="search" action="/listings" method="GET">
+
                     <div class="search-container">
-                        <input class="form-control search-input" type="search" name="search" value="<%=search || '' %>" placeholder="Search destination" aria-label="Search">
+                        <input class="form-control search-input" type="search" name="search" value="<%= search || '' %>"
+                            placeholder="Search destination" aria-label="Search">
+                        <!-- search icon -->
                         <button class="search-btn" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
+
+
+                    <div class="filter-container dropdown">
+                        <button class="filter-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-end p-3">
+                            <label for="country" class="form-label" style="font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;">Country</label>
+                            <select name="country" id="country" class="form-select mb-2">
+                                <option value="">All Countries</option>
+                                <option value="India" <% if(country==='India' ){ %>selected<% } %> >India</option>
+                                <option value="United States" <% if(country==='United States' ){ %>selected<% } %> >United States</option>
+                                <option value="United Kingdom" <% if(country==='United Kingdom' ){ %>selected<% } %> >United Kingdom</option>
+                                <option value="Canada" <% if(country==='Canada' ){ %>selected<% } %> >Canada</option>
+                                <option value="Italy" <% if(country==='Italy' ){ %>selected<% } %> >Italy</option>
+                                <option value="Mexico" <% if(country==='Mexico' ){ %>selected<% } %> >Mexico</option>
+                                <option value="Fiji" <% if(locals.country==='Fiji' ){ %>selected<% } %> >Fiji</option>
+                            </select>
+                            
+                            <label class="form-label" style="font-size: 0.85rem; font-weight: 600; margin-bottom: 4px;">Price Range</label>
+                            <div class="d-flex gap-2 mb-3">
+                                <input type="number" name="minPrice" value="<%= minPrice || '' %>" placeholder="Min" class="form-control" style="font-size: 0.9rem;">
+                                <input type="number" name="maxPrice" value="<%= maxPrice || '' %>" placeholder="Max" class="form-control" style="font-size: 0.9rem;">
+                            </div>
+                            <div class="d-flex gap-2 mb-3">
+                                <button class="btn btn-danger w-100" type="reset" style="text-align:center;" ><a href="/listings" style="color: aliceblue; text-decoration: none;">Clear Filters</a></button>
+                                <button class="btn btn-danger w-100" type="submit">Apply Filters</button>
+                            </div>
+                        </div>
+                            
+                    </div>
+
                 </form>
                 <% if(!currUser){ %>
                     <a class="nav-link active" aria-current="page" href="/signUp"><b>SignUp</b></a>
                     <a class="nav-link active" href="/logIn"><b>LogIn</b></a>
-                <% } %>
-                <% if(currUser){ %>
-                    <a class="nav-link active" href="/logOut"><b>LogOut</b></a>
-                <% } %>
+                    <% } %>
+                        <% if(currUser){ %>
+                            <a class="nav-link active" href="/logOut"><b>LogOut</b></a>
+                            <% } %>
             </div>
-                
+
         </div>
     </div>
 </nav>

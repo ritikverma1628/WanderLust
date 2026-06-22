@@ -99,6 +99,9 @@ async function main() {
       //req.user is a property which is created in req object by passport and contains the currently logged in user
       res.locals.currUser = req.user;
       res.locals.search = req.query.search || "";
+      res.locals.country = req.query.country || "";
+      res.locals.minPrice = req.query.minPrice || "";
+      res.locals.maxPrice = req.query.maxPrice || "";
       next();
     });
 
